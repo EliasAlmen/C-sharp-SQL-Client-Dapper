@@ -40,5 +40,32 @@ namespace EC05_C_sharp_SQL_Client_Dapper_ConsoleApp.Services
             var database = new DatabaseService();
             return await database.GetCustomerAsync(email);
         }
+
+        public static async Task UpdateAsync(Customer customer)
+        {
+            var database = new DatabaseService();
+
+            var customerEntity = await database.GetCustomerEntityByIdAsync(customer.Id);
+
+            if (!string.IsNullOrWhiteSpace(customer.FirstName)) { customerEntity.FirstName= customer.FirstName; }
+            if (!string.IsNullOrWhiteSpace(customer.LastName)) { customerEntity.LastName= customer.LastName; }
+            if (!string.IsNullOrWhiteSpace(customer.Email)) { customerEntity.Email= customer.Email; }
+            if (!string.IsNullOrWhiteSpace(customer.PhoneNumber)) { customerEntity.PhoneNumber= customer.PhoneNumber; }
+
+            var addressEntity = await database.GetAddressEntityByIdAsync(customerEntity.AddressId);
+            if (!string.IsNullOrWhiteSpace(customer.StreetName)) { addressEntity.StreetName= customer.StreetName; }
+            if (!string.IsNullOrWhiteSpace(customer.PostalCode)) { addressEntity.PostalCode= customer.PostalCode; }
+            if (!string.IsNullOrWhiteSpace(customer.City)) { addressEntity.City= customer.City; }
+
+            customerEntity.AddressId = await database.GetOrSaveAddressAsync(addressEntity);
+
+            await database.UpdateCustomerAsync(customerEntity);
+        }
+
+        public static async Task DeleteAsync(string email)
+        {
+            var database = new DatabaseService();
+            await database.DeletCustomerAsync(email);
+        }
     }
 }

@@ -52,7 +52,7 @@ namespace EC05_C_sharp_SQL_Client_Dapper_ConsoleApp.Services
                     Console.WriteLine($"Name: {customer.FirstName} {customer.LastName}");
                     Console.WriteLine($"E-postadress: {customer.Email}");
                     Console.WriteLine($"Telefonnummer: {customer.PhoneNumber}");
-                    Console.WriteLine($"Adress: {customer.StreetName}, {customer.PostalCode}, {customer.City}");/**/
+                    Console.WriteLine($"Adress: {customer.StreetName}, {customer.PostalCode} {customer.City}");
                     Console.WriteLine("");
                 }
             }
@@ -79,7 +79,7 @@ namespace EC05_C_sharp_SQL_Client_Dapper_ConsoleApp.Services
                     Console.WriteLine($"Name: {customer.FirstName} {customer.LastName}");
                     Console.WriteLine($"E-postadress: {customer.Email}");
                     Console.WriteLine($"Telefonnummer: {customer.PhoneNumber}");
-                    Console.WriteLine($"Adress: {customer.StreetName}, {customer.PostalCode}, {customer.City}");
+                    Console.WriteLine($"Adress: {customer.StreetName}, {customer.PostalCode} {customer.City}");
                     Console.WriteLine("");
                 }
                 else
@@ -96,5 +96,66 @@ namespace EC05_C_sharp_SQL_Client_Dapper_ConsoleApp.Services
             }
         }
 
+        public async Task DeleteSpecificContactAsync()
+        {
+            Console.Write("Ange e-postadress på kunden: ");
+            var email = Console.ReadLine();
+
+            if (!string.IsNullOrEmpty(email))
+            {
+                //delete specific customer from database
+                await CustomerService.DeleteAsync(email);
+            }
+            else
+            {
+                Console.WriteLine($"Ingen e-postadress angiven.");
+                Console.WriteLine("");
+            }
+        }
+
+        public async Task UpdateSpecificContactAsync()
+        {
+            Console.Write("Ange e-postadress på kunden: ");
+            var email = Console.ReadLine();
+
+            if (!string.IsNullOrEmpty(email))
+            {
+                var customer = await CustomerService.GetAsync(email);
+
+                Console.Write("Skriv in information på de fält du vill uppdatera. \n");
+
+                Console.WriteLine("Förnamn: ");
+                customer.FirstName = Console.ReadLine() ?? null!;
+
+                Console.WriteLine("Efernamn: ");
+                customer.LastName = Console.ReadLine() ?? null!;
+
+                Console.WriteLine("E-postadress: ");
+                customer.Email = Console.ReadLine() ?? null!;
+
+                Console.WriteLine("Telefonnummer: ");
+                customer.PhoneNumber = Console.ReadLine() ?? null!;
+
+                Console.WriteLine("Gatuadress: ");
+                customer.StreetName = Console.ReadLine() ?? null!;
+
+                Console.WriteLine("Postnummer: ");
+                customer.PostalCode = Console.ReadLine() ?? null!;
+
+                Console.WriteLine("Stad: ");
+                customer.City = Console.ReadLine() ?? null!;
+
+
+
+
+                //update specific customer from database
+                await CustomerService.UpdateAsync(customer);
+            }
+            else
+            {
+                Console.WriteLine($"Ingen e-postadress angiven.");
+                Console.WriteLine("");
+            }
+        }
     }
 }

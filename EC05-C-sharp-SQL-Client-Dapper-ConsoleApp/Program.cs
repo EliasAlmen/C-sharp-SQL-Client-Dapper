@@ -29,15 +29,15 @@ while (true)
             await menu.ListSpecificContactAsync();
             break;
 
-/*        case "4":
+        case "4":
             Console.Clear();
-            menu.UpdateSpecificContact();
+            await menu.UpdateSpecificContactAsync();
             break;
 
         case "5":
             Console.Clear();
-            menu.DeleteSpecificContact();
-            break;*/
+            await menu.DeleteSpecificContactAsync();
+            break;
     }
 
     Console.WriteLine("\nTryck på valfri knapp för att fortsätta...");

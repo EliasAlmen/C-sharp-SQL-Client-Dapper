@@ -36,5 +36,30 @@ namespace EC05_C_sharp_SQL_Client_Dapper_ConsoleApp.Services
             using var conn = new SqlConnection(_connectionString);
             return await conn.QueryFirstOrDefaultAsync<Customer>("SELECT c.Id, c.FirstName, c.LastName, c.Email, PhoneNumber, a.StreetName, a.PostalCode, a.City FROM Customers c JOIN Addresses a ON c.AddressId = a.Id WHERE c.Email = @Email", new { Email = email });
         }
+
+        public async Task<CustomerEntity> GetCustomerEntityByIdAsync(int id)
+        {
+            using var conn = new SqlConnection(_connectionString);
+            return await conn.QueryFirstOrDefaultAsync<CustomerEntity>("SELECT * FROM Customers WHERE Id = @Id", new { Id = id });
+        }
+
+        public async Task UpdateCustomerAsync(CustomerEntity customerEntity)
+        {
+            using var conn = new SqlConnection(_connectionString);
+            await conn.ExecuteAsync("UPDATE Customers SET FirstName = @FirstName, LastName = @LastName, Email = @Email, PhoneNumber = @PhoneNumber, AddressId = @AddressId WHERE Id = @Id", customerEntity);
+        }
+
+        public async Task DeletCustomerAsync(string email)
+        {
+            using var conn = new SqlConnection(_connectionString);
+            await conn.ExecuteAsync("DELETE FROM Customers WHERE Email = @Email", new { Email = email });
+        }
+
+        public async Task<AddressEntity> GetAddressEntityByIdAsync(int id)
+        {
+            using var conn = new SqlConnection(_connectionString);
+            return await conn.QueryFirstOrDefaultAsync<AddressEntity>("SELECT * FROM Addresses WHERE Id = @Id", new { Id = id });
+        }
+
     }
 }
