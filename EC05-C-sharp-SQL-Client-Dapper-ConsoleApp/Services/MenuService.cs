@@ -93,6 +93,11 @@ namespace EC05_C_sharp_SQL_Client_Dapper_ConsoleApp.Services
                     Console.WriteLine("");
                 }
             }
+            else
+            {
+                Console.WriteLine($"Ingen e-postadress angiven.");
+                Console.WriteLine("");
+            }
         }
 
     }
