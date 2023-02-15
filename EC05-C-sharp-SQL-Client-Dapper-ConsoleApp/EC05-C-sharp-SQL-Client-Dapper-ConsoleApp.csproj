@@ -8,4 +8,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Entities\" />
+    <Folder Include="Data\" />
+  </ItemGroup>
+
 </Project>

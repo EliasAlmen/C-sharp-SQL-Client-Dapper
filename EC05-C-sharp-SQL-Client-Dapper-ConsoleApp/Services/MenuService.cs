@@ -53,6 +53,44 @@ namespace EC05_C_sharp_SQL_Client_Dapper_ConsoleApp.Services
                     Console.WriteLine($"Kundnummer: {customer.ID}");
                     Console.WriteLine($"Name: {customer.FirstName} {customer.LastName}");
                     Console.WriteLine($"E-postadress: {customer.Email}");
+                    Console.WriteLine($"Telefonnummer: {customer.PhoneNumber}");
+                    Console.WriteLine($"Adress: {customer.Address.StreetName}, {customer.Address.PostalCode}, {customer.Address.City}");/**/
+                    Console.WriteLine("");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Inga kunder i databasen...");
+                Console.WriteLine("");
+            }
+        }
+
+        public void ListSpecificContact()
+        {
+            //get specific customer+address from database
+            var database = new DatabaseService();
+
+            Console.Write("Ange e-postadress på kunden: ");
+            var email = Console.ReadLine();
+
+            if (!string.IsNullOrEmpty(email))
+            {
+                var customer = database.GetCustomer(email);
+
+                if (customer != null)
+                {
+                    Console.WriteLine($"Kundnummer: {customer.ID}");
+                    Console.WriteLine($"Name: {customer.FirstName} {customer.LastName}");
+                    Console.WriteLine($"E-postadress: {customer.Email}");
+                    Console.WriteLine($"Telefonnummer: {customer.PhoneNumber}");
+                    Console.WriteLine($"Adress: {customer.Address.StreetName}, {customer.Address.PostalCode}, {customer.Address.City}");/**/
+                    Console.WriteLine("");
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine($"Ingen kund med den angivna e-postadressen {email} hittad...");
+                    Console.WriteLine("");
                 }
             }
         }
