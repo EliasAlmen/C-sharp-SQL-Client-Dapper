@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EC05_C_sharp_SQL_Client_Dapper_ConsoleApp.Models
+namespace EC05_C_sharp_SQL_Client_Dapper_ConsoleApp.Models.Entities
 {
-    internal class Customer
+    internal class CustomerEntity
     {
         public int Id { get; set; }
         public string FirstName { get; set; } = string.Empty;
@@ -14,6 +14,6 @@ namespace EC05_C_sharp_SQL_Client_Dapper_ConsoleApp.Models
         public string Email { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
 
-        public Address Address { get; set; } = new Address();
+        public int AddressId { get; set; }
     }
 }
